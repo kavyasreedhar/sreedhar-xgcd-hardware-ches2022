@@ -17,7 +17,6 @@ commands:
   - if [[ {constant_time_support} = 1 ]]; then python xgcd/hardware/extended_gcd/xgcd_wrapper.py --bit_length {bit_length} --reduction_factor_even {reduction_factor_even} --reduction_factor_odd {reduction_factor_odd} --constant_time_support; else python xgcd/hardware/extended_gcd/xgcd_wrapper.py --bit_length {bit_length} --reduction_factor_even {reduction_factor_even} --reduction_factor_odd {reduction_factor_odd}; fi
 
   # generate JTAG
-  - export DW_ALL_PATH={DW_ALL_PATH}
   - cd xgcd/hardware/jtag/genesis
   - sed -i.bak "s|VAL => 255|VAL => $bit_length|" jtag_wrapper.svp
   - sed -i.bak "s|VAL => 521|VAL => $jtag_cfg_bus_width|" jtag_wrapper.svp
