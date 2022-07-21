@@ -1,0 +1,69 @@
+//; my $cfg_bus_width = parameter(NAME => 'cfg_bus_width', VAL => 521, DOC => 'Width of config_data');
+//; my $data_width = parameter(NAME => 'data_width', VAL => 255, DOC => 'Width of data');
+//; my $cfg_addr_width = parameter(NAME => 'cfg_addr_width', VAL => 2, DOC => 'Width of config_addr');
+//; my $cfg_op_width = parameter(NAME => 'cfg_op_width', VAL => 3, DOC => 'Width of config_op');
+
+
+module `mname` (
+  output logic [`$data_width-1`:0] A,
+  output logic [`$data_width-1`:0] B,
+  input [`$data_width+5-1`:0] bezout_a,
+  input [`$data_width+5-1`:0] bezout_b,
+  output logic constant_time,
+  output logic clk_en,
+  input clk_in,
+  input done,
+  input rst_n,
+  output logic start,
+  input trst_n,
+  input tck,
+  input tms,
+  input tdi,
+  output logic tdo
+);
+
+logic [`$cfg_bus_width-1`:0] config_data_jtag_out;
+logic [`$cfg_bus_width-1`:0] config_data_jtag_in;
+logic [`$cfg_op_width-1`:0] op_jtag;
+
+//; my $jtag_obj = generate_base("jtag", "jtag", SYSCLK_CFG_BUS_WIDTH => $cfg_bus_width, SYSCLK_CFG_ADDR_WIDTH => $cfg_addr_width, SYSCLK_CFG_OPCODE_WIDTH =>$cfg_op_width); 
+`$jtag_obj -> instantiate` ( 
+    .ifc_config_addr_to_gc( /* unused*/ ),
+    .ifc_config_data_to_gc( config_data_jtag_out ),
+    .ifc_config_data_from_gc( config_data_jtag_in ),
+    .ifc_config_op_to_gc( op_jtag ),
+    .ifc_trst_n(trst_n),
+    .ifc_tck(tck),
+    .ifc_tms(tms),
+    .ifc_tdi(tdi),
+    .ifc_tdo(tdo),
+    .clk(clk_in),
+    .reset(~rst_n),
+    .sys_clk_activated (1'b1) // always use sys_clock if we are not changing clock
+    );
+
+always_ff @(posedge clk_in, negedge rst_n) begin
+  if (~rst_n) begin
+    start <= 1'h0;
+    A <= `$data_width`'h0;
+    B <= `$data_width`'h0;
+    clk_en <= 1'h0;
+    constant_time <= 1'h0;
+  end
+  else if (op_jtag == `$cfg_op_width`'h0) begin
+    start <= 1'h0;
+    constant_time <= config_data_jtag_out[`$data_width*2`];
+  end
+  else if (op_jtag == `$cfg_op_width`'h1) begin
+    clk_en <= 1'h1;
+    start <= 1'h1;
+    constant_time <= config_data_jtag_out[`$data_width*2`];
+    A <= config_data_jtag_out[`$data_width-1`:0];
+    B <= config_data_jtag_out[`$data_width*2-1`:`$data_width`];
+  end
+  else if (op_jtag == `$cfg_op_width`'h2) begin
+    config_data_jtag_in <= {done, bezout_b, bezout_a};
+  end
+end
+endmodule   // JtagWrapper
+

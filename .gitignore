@@ -1,0 +1,10 @@
+*__pycache__*
+*.v
+*.sv
+*.egg-info
+*.out
+*.vcd
+.vscode
+xgcd_env/
+.DS_Store
+XGCD_debug

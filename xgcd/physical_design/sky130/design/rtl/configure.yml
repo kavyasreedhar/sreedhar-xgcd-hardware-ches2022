@@ -1,0 +1,40 @@
+name: rtl
+
+outputs:
+  - design.v
+
+commands:
+  - wget https://github.com/kavyasreedhar/sreedhar-xgcd-hardware-ches2022/archive/refs/heads/main.zip
+  - unzip main.zip
+  - cd sreedhar-xgcd-hardware-ches2022-main
+  - python3.7 -m venv xgcd_env
+  - source xgcd_env/bin/activate
+  - python -m pip install --upgrade pip
+  - pip install -e .
+  - export TOP=$PWD
+  # generate XGCD wrapper (Core, JTAG, reset synchronizer wiring,
+  # primarily Core and reset synchornizer)
+  - if [[ {constant_time_support} = 1 ]]; then python xgcd/hardware/extended_gcd/xgcd_wrapper.py --bit_length {bit_length} --reduction_factor_even {reduction_factor_even} --reduction_factor_odd {reduction_factor_odd} --constant_time_support; else python xgcd/hardware/extended_gcd/xgcd_wrapper.py --bit_length {bit_length} --reduction_factor_even {reduction_factor_even} --reduction_factor_odd {reduction_factor_odd}; fi
+
+  # generate JTAG
+  - export DW_ALL_PATH={DW_ALL_PATH}
+  - cd xgcd/hardware/jtag/genesis
+  - sed -i.bak "s|VAL => 255|VAL => $bit_length|" jtag_wrapper.svp
+  - sed -i.bak "s|VAL => 521|VAL => $jtag_cfg_bus_width|" jtag_wrapper.svp
+  - cd ..
+  - make rtl
+  - cat rtl/* > all_jtag.v
+
+  # concatenate XGCDWrapper with JTAG
+  - cd $TOP
+  - cat XGCDWrapper.v xgcd/hardware/jtag/all_jtag.v > design.v
+  - cd ..
+  - cat $TOP/design.v > outputs/design.v
+
+parameters:
+  bit_length: 255
+  reduction_factor_even: 2
+  reduction_factor_odd: 4
+  constant_time_support: 1
+  jtag_cfg_bus_width: 521
+  DW_ALL_PATH: '/cad/synopsys/dc_shell/latest/dw/sim_ver'

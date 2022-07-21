@@ -1,0 +1,5 @@
+./genesis/cfg_and_dbg.svp
+./genesis/jtag_wrapper.svp
+./genesis/jtag.svp
+./genesis/flop.svp
+./genesis/tap.svp

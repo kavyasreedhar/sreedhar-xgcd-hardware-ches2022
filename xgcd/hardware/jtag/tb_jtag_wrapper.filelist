@@ -1,0 +1,17 @@
+/nobackup/skavya/crypto/crypto/hardware/jtag/tb_rtl/top.sv
+/nobackup/skavya/crypto/crypto/hardware/jtag/GcdRadix4PM_1024.v
+/nobackup/skavya/crypto/crypto/hardware/jtag/tb_rtl/jtag_driver.sv
+/nobackup/skavya/crypto/crypto/hardware/jtag/tb_rtl/cfg_and_dbg_unq1.sv
+/nobackup/skavya/crypto/crypto/hardware/jtag/tb_rtl/jtag_ifc_unq1.sv
+/nobackup/skavya/crypto/crypto/hardware/jtag/tb_rtl/cfg_ifc_unq1.sv
+/nobackup/skavya/crypto/crypto/hardware/jtag/tb_rtl/glc_prog_unq1.sv
+/nobackup/skavya/crypto/crypto/hardware/jtag/tb_rtl/jtag_wrapper.sv
+/nobackup/skavya/crypto/crypto/hardware/jtag/tb_rtl/clocker_unq1.sv
+/nobackup/skavya/crypto/crypto/hardware/jtag/tb_rtl/flop_unq2.sv
+/nobackup/skavya/crypto/crypto/hardware/jtag/tb_rtl/tap_unq1.sv
+/nobackup/skavya/crypto/crypto/hardware/jtag/tb_rtl/flop_unq3.sv
+/nobackup/skavya/crypto/crypto/hardware/jtag/tb_rtl/template_ifc_unq1.sv
+/nobackup/skavya/crypto/crypto/hardware/jtag/tb_rtl/flop_unq1.sv
+/nobackup/skavya/crypto/crypto/hardware/jtag/tb_rtl/flop_unq4.sv
+/nobackup/skavya/crypto/crypto/hardware/jtag/tb_rtl/jtag.sv
+/cad/synopsys/dc_shell/latest/dw/sim_ver/DW_tap.v

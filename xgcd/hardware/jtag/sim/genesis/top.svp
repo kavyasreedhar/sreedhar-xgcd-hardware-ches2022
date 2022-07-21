@@ -1,0 +1,141 @@
+/*************************************************************************
+ ** From Perforce:
+ **
+ ** $Id: //Smart_design/ChipGen/moduleTest/Primitives/top.vp#5 $
+ ** $DateTime: 2010/03/25 11:23:45 $
+ ** $Change: 8474 $
+ ** $Author: shacham $
+ *************************************************************************/
+
+/* *****************************************************************************
+ * File: top.vp
+ * Author: Ofer Shacham
+ * 
+ * Description:
+ * simple top that instantiate the test and the dut
+ * 
+ *
+ * Change bar:
+ * -----------
+ * Date          Author   Description
+ * Mar 19, 2010  shacham  initial version
+ * Apr 13, 2020  kongty   just added axi (This perl based testbench MUST be replaced in the future)
+ *  
+ * ****************************************************************************/
+
+/*******************************************************************************
+ * Generation Control Definitions
+ ******************************************************************************/
+
+/*******************************************************************************
+ * Simulation Control Definitions
+ ******************************************************************************/
+//; my $max_cyc = parameter(Name=>'MaxCycles', Val=>10000000, Min=>1, Step=>1, 
+//;                Doc=>'Max number of simulation cycles');
+//; my $design_name = parameter(Name=>'DesignName', Val=>'jtag_wrapper', 
+//;                Doc=>'This is a generic top, so what is the design name to use?');
+//; my $IDCODE = $self->define_param(IDCODE => 1);
+//; my $cfg_data_width = parameter(Name=>'cfg_data_width',val=>2049);
+//; my $cfg_addr_width = parameter(Name=>'cfg_addr_width',val=>2);
+//; my $cfg_op_width = parameter(Name=>'cfg_op_width',val=>3);
+//; my $data_width = parameter(Name=>'data_width',val=>1024);
+//;
+//; # Set up IO list for JTAG interface to pass to JTAGDriver 
+//; my $io_list = $self->force_param(IO_LIST => 
+//;        [    
+//;            {name => 'bezout_a', width => $data_width,  direction => 'in', bsr => 'no',  pad => 'digital', orientation => 'right'},
+//;            {name => 'bezout_b', width => $data_width,  direction => 'in', bsr => 'no',  pad => 'digital', orientation => 'right'},
+//;            {name => 'A', width => $data_width,  direction => 'out', bsr => 'no',  pad => 'digital', orientation => 'right'},
+//;            {name => 'B', width => $data_width,  direction => 'out', bsr => 'no',  pad => 'digital', orientation => 'right'},
+//;            {name => 'start', width => 1,  direction => 'out', bsr => 'no',  pad => 'digital', orientation => 'right'},
+//;            {name => 'done', width => 1,  direction => 'in', bsr => 'no',  pad => 'digital', orientation => 'right'},
+//;            {name => 'clk_en', width => 1,  direction => 'out', bsr => 'no',  pad => 'digital', orientation => 'right'}
+//;        ]);
+//; my $num_ios = scalar(@{$io_list});
+
+//; my $sc_jtag2gc_ifc = $self->unique_inst('cfg_ifc', 'sc_jtag2gc_ifc',
+//;                                          DataWidth => $cfg_data_width,
+//;                                          AddrWidth => $cfg_addr_width,
+//;                                          OpcodeWidth => $cfg_op_width);
+//; my $sc_cfg_ifc_ref = parameter(name=>'SC_CFG_IFC_REF',val=>$sc_jtag2gc_ifc);
+//; my $tc_cfg_ifc_ref = parameter(name=>'TC_CFG_IFC_REF',val=>$sc_jtag2gc_ifc);
+
+/*******************************************************************************
+ * Module top:
+ ******************************************************************************/
+
+module `mname`();
+   logic Clk;
+   logic Reset;
+   logic rst_n;
+
+   /****************************************************************************
+    * Instantiate clocks
+    * *************************************************************************/
+    //; my $clocker_obj = generate('clocker', 'clocker', CLK_PERIOD=>10, RST_PERIOD=>20);
+    `$clocker_obj->instantiate` (.Clk(Clk), .Reset(Reset));
+
+   // timer:
+   initial begin
+      repeat(`$max_cyc`) @(posedge Clk);
+      $display("\n%0t\tERROR: The `$max_cyc` cycles marker has passed!",$time);
+      $finish(2);
+   end
+
+   /****************************************************************************
+    * Instantiate DUT interface and DUT
+    * *************************************************************************/
+   //; # We use generate_base when there is for sure just one of X
+
+   //; my $jtag_ifc = $self->unique_inst('jtag_ifc', 'jtag_ifc');
+   //; my $dut_ifc = $self->unique_inst('template_ifc', 'dut_ifc', IO_LIST=>$io_list);
+   //; my $dut_obj = generate_base($design_name, 'dut', data_width=>$data_width, cfg_bus_width=>$cfg_data_width,cfg_addr_width=>$cfg_addr_width, cfg_op_width=>$cfg_op_width);
+
+   //; $self -> define_param(JTAG_IFC => $jtag_ifc);
+   //; $self -> define_param(DUT_IFC => $dut_ifc);
+
+   `$jtag_ifc->instantiate` ();
+   `$dut_ifc->instantiate` (.Clk(Clk), .Reset(Reset));
+
+   AhaResetSync reset_sync (
+        .CLK(Clk),
+        .Dn(~dut_ifc.Reset),
+        .Qn(rst_n)
+    );
+
+   GcdRadix4PM_1024 gcd_obj (
+         .clk(Clk),
+//         .rst_n(~dut_ifc.Reset)
+         .rst_n(rst_n)
+   );
+
+   `$dut_obj->instantiate` (
+        .clk_in                     ( dut_ifc.Clk                   ),
+//        .rst_n                   ( ~dut_ifc.Reset                 ),
+        .rst_n (rst_n),
+
+        // JTAG
+        .tck                        ( jtag_ifc.tck                  ),
+        .trst_n                     ( jtag_ifc.trst_n               ),
+        .tdi                        ( jtag_ifc.tdi                  ),
+        .tms                        ( jtag_ifc.tms                  ),
+        .tdo                        ( jtag_ifc.tdo                  ),
+
+        // cgra config
+        .A                          ( gcd_obj.A         ),
+        .B                          ( gcd_obj.B         ),
+        .bezout_a                   ( gcd_obj.bezout_a  ),
+        .bezout_b                   ( gcd_obj.bezout_b  ),
+        .start                      ( gcd_obj.start     ),
+        .done                       ( gcd_obj.done      ),
+        .clk_en                     ( gcd_obj.clk_en    )
+    );
+
+   /****************************************************************************
+    * Instantiate Test
+    * **************************************************************************/
+    //; my $tst_obj = generate('glc_prog', 'glc_prog', data_width=>$data_width, config_data_width=>$cfg_data_width);
+    `$tst_obj->instantiate` (.dut_ifc(`$dut_ifc->iname()`), .jtag_ifc(`$jtag_ifc->iname()`));
+      
+endmodule
+ 
