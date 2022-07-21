@@ -136,7 +136,7 @@ def xgcd_test_core(bit_length,
             flags = ["-Wno-fatal", "--trace"]
 
         if use_external:
-            if not os.environ['DW_PATH']:
+            if 'DW_PATH' not in os.environ.keys():
                 sys.exit( 'Error: DW_PATH is not set (see README.md)!' )
             shutil.copy(dw_path, tempdir)
 
