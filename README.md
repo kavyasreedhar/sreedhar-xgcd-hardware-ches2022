@@ -3,6 +3,7 @@
 [Paper link](https://eprint.iacr.org/2021/1292)
 
 Authors: Kavya Sreedhar, Mark Horowitz, Christopher Torng
+
 Contact: skavya@stanford.edu, ctorng@stanford.edu
 
 <!-- ![image](images/xgcd_execution_flow.png) -->
