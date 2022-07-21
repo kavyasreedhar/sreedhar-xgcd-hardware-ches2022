@@ -36,8 +36,10 @@ def construct():
     'topographical'      : True,
     'hold_target_slack'  : 0.005,
     'setup_target_slack' : 0.020,
-    'DW_ALL_PATH': '/cad/synopsys/dc_shell/latest/dw/sim_ver',
   }
+
+  jtag_cfg_bus_width = (parameters['bit_length'] + 5) * 2 + 1
+  parameters['jtag_cfg_bus_width'] = jtag_cfg_bus_width
 
   #-----------------------------------------------------------------------
   # Create nodes
