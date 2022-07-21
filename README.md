@@ -553,8 +553,6 @@ The SKY130 process node is an open-source hybrid 180nm-130nm technology (https:/
 
 Here is how to see the steps in the physical design flow with mflowgen:
 
-To see steps in physical design flow with mflowgen:
-
 For Design (1):
 
 ```
