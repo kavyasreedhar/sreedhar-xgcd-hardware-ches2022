@@ -614,6 +614,24 @@ The TSMC16 process node is a 16nm commercial technology. We cannot release PDK f
 
 To see the steps in the physical design flow with mflowgen:
 
+For Design (1):
+
+```
+cd $TOP/xgcd/physical_design/tsmc16/build
+mflowgen run --design ../design/construct_design1.py
+make status
+```
+
+For Design (2):
+
+```
+cd $TOP/xgcd/physical_design/tsmc16/build
+mflowgen run --design ../design/construct_design2.py
+make status
+```
+
+For any design, with parameters set in `$TOP/xgcd/physical_design/tsmc16/design/construct.py`:
+
 ```
 cd $TOP/xgcd/physical_design/tsmc16/build
 mflowgen run --design ../design
