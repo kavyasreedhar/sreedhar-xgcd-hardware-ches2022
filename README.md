@@ -5,9 +5,9 @@
 Authors: Kavya Sreedhar, Mark Horowitz, Christopher Torng
 Contact: skavya@stanford.edu, ctorng@stanford.edu
 
-<!-- ![image](readme/xgcd_execution_flow.png) -->
+<!-- ![image](images/xgcd_execution_flow.png) -->
 <div align="center">
-  <img src="./readme/xgcd_execution_flow.png" height="800">
+  <img src="./images/xgcd_execution_flow.png" height="800">
 </div>
 <p align="left">
   XGCD Execution Flow Diagram – Key components in the execution flow are broken out in detail. (A) Pre-processing step to generate odd inputs to iterations loop; (B) Update for \delta register; (C) Variable updates for a, b, u, y, m, n registers in the iterations loop illustrating the wide parallel datapath with late selects (the logic for unique update types are shown in detail); (D) Control flow state diagram with termination condition; (E) Post-processing step to generate XGCD outputs. Please see the paper link above for more detail.
