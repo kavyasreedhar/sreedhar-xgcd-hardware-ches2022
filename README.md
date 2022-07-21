@@ -648,7 +648,7 @@ make 2
 * This step generates and wires the XGCD hardware, the JTAG modules, and the reset synchornizer. The commands that are run are listed in `$TOP/xgcd/physical_design/tsmc16/design/rtl/configure.yml`.
 * The top level pin names match with the Caravel wrapper provided by Efabless and Google for SKY130 projects.
 
-To run synthesis with Synopsys DC:
+To run synthesis with Synopsys DC (similarly to the RTL step, note that "4" corresponds to the `synopsys-dc-synthesis` node in `make status` and `make list`:
 
 ```
 make 4
