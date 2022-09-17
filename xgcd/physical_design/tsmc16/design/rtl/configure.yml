@@ -7,7 +7,7 @@ commands:
   - wget https://github.com/kavyasreedhar/sreedhar-xgcd-hardware-ches2022/archive/refs/heads/main.zip
   - unzip main.zip
   - cd sreedhar-xgcd-hardware-ches2022-main
-  - python3.7 -m venv xgcd_env
+  - python3 -m venv xgcd_env
   - source xgcd_env/bin/activate
   - python -m pip install --upgrade pip
   - pip install -e .
