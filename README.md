@@ -61,7 +61,7 @@ For MacOS:
 ```
 brew install verilator
 ```
-4) Genesis r11879 required for JTAG in RTL generation for physical design script execution.
+4) Genesis r11879 (https://github.com/StanfordVLSI/Genesis2/wiki) required for JTAG in RTL generation for physical design script execution.
 
 ### Repo Setup
 1) Clone repository:
