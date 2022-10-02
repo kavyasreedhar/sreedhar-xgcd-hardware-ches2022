@@ -669,7 +669,7 @@ E           IsADirectoryError: [Errno 21] Is a directory: '/Users/sreedhar/xgcd'
 ```
 Solution
 
-* Make sure that `$DW_PATH` includes `DW01_CSA.v` (it should include the filename `/path/to/src_ver/DW01_csa.v`, instead of only the directory `/path/to/src_ver`.
+* If using the DesignWare CSA module (not our handwritten stub), please make sure that `$DW_PATH` includes `DW01_CSA.v` (it should include the filename `/path/to/src_ver/DW01_csa.v`, instead of only the directory `/path/to/src_ver`.
 
 Error:
 ```
@@ -686,7 +686,9 @@ Solution:
 
 * Install Verilator (see "Required System Setup" section above).
 
-Unless otherwise specified, all commands should be run from `$TOP`.
+Other notes:
+* Unless otherwise specified, all commands should be run from `$TOP`.
+* If using our handwritten stub (not the DesignWare CSA module), please make sure that `DW_PATH` is not set (`unset DW_PATH`)
 
 ## Citation
 ```
