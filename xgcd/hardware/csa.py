@@ -191,7 +191,7 @@ class DW01_csa(Generator):
                  bit_length=800,
                  DW=True,
                  use_external=True):
-        super().__init__(f"{('DW01_csa' if DW else 'CW_csa') if use_external else 'CSA'}")
+        super().__init__(f"{'DW01_csa' if DW else 'CSA'}")
 
         self.bit_length = bit_length
         self.DW = DW
@@ -225,14 +225,16 @@ class DW01_csa(Generator):
             self.sum = self.output("sum", self.width_)
             self.co = self.output("co", 1)
 
-            self.wire(self.carry[0], self.ci)
-            self.wire(self.carry[1], (self.a[0] & self.b[0]) | (self.b[0] & self.c[0]) | (self.c[0] & self.a[0]))
-            self.wire(self.sum[0], self.a[0] ^ self.b[0] ^ self.c[0])
+            self.wire(self.carry[0], self.c[0])
+            self.wire(self.carry[1], (self.a[0] & self.b[0]) | ((self.a[0] ^ self.b[0]) & self.ci))
+
+            self.wire(self.sum[0], self.a[0] ^ self.b[0] ^ self.ci)
             self.wire(self.sum[self.width_ - 1], self.a[self.width_ - 1] ^ self.b[self.width_ - 1] ^ self.c[self.width_ - 1])
-            self.wire(self.co, (self.a[self.width_ - 1] & self.b[self.width_ - 1]) | (self.b[self.width_ - 1] & self.c[self.width_ - 1]) | (self.c[self.width_ - 1] & self.a[self.width_ - 1]))
+
+            self.wire(self.co, (self.a[self.width_ - 1] & self.b[self.width_ - 1]) | ((self.a[self.width_ - 1] ^ self.b[self.width_ - 1]) & self.c[self.width_ - 1]))
 
             for i in range(1, self.width_ - 1):
-                self.wire(self.carry[i + 1], (self.a[i] & self.b[i]) | (self.b[i] & self.c[i]) | (self.c[i] & self.a[i]))
+                self.wire(self.carry[i + 1], (self.a[i] & self.b[i]) | ((self.a[i] ^ self.b[i]) & self.c[i]))
                 self.wire(self.sum[i], self.a[i] ^ self.b[i] ^ self.c[i])
 
 class DW01_csa_4(Generator):
