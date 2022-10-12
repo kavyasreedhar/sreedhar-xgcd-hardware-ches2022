@@ -32,7 +32,9 @@ def xgcd_test_core(bit_length,
 
     assert shift_factor_a == shift_factor_b, "Even reduction factor must be the same for a and b in the functional model."
     assert constant_time == 0 or constant_time == 1, "constant_time configuration must be 0 or 1."
-    
+   
+    use_external = ('DW_PATH' in os.environ.keys())
+ 
     if constant_time == 1:
         assert constant_time_support, "Must have hardware with constant_time support to enable constant_time configuration"
 
@@ -135,9 +137,10 @@ def xgcd_test_core(bit_length,
             tempdir = "XGCD_debug"
             flags = ["-Wno-fatal", "--trace"]
 
-        if use_external:
-            if 'DW_PATH' not in os.environ.keys():
-                sys.exit( 'Error: DW_PATH is not set (see README.md)!' )
+        if not use_external:
+            print("Using handwritten CSA module for test.")
+        else:
+            print("Using DesignWare CSA module for test.")
             shutil.copy(dw_path, tempdir)
 
         tester.compile_and_run(target="verilator",
