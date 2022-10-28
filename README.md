@@ -4,7 +4,7 @@
 
 Authors: Kavya Sreedhar, Mark Horowitz, Christopher Torng
 
-Contact: skavya@stanford.edu, ctorng@stanford.edu
+Contact: skavya@stanford.edu
 
 <!-- ![image](images/xgcd_execution_flow.png) -->
 <div align="center">
