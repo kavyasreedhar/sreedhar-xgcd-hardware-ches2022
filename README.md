@@ -688,6 +688,8 @@ cd $TOP/xgcd/fpga/build_255
 mflowgen run --design ../design_255
 make 2
 ```
+This command takes 2 hours on our machine.
+
 To view timing and utilization reports:
 
 ```
