@@ -1,4 +1,4 @@
-set PART xc7k325tiffv676-2L;
+set PART xc7k410tfbg676-1;
 set SRC inputs/design.v;
 set TOP XGCDWrapper;
 set CLOCK_PERIOD 2.75;
