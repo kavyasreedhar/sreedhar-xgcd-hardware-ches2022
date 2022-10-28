@@ -1,0 +1,14 @@
+name: fpga_synth_pnr
+
+inputs:
+  - design.v
+
+commands:
+  - cp design_1024.tcl original_design_1024.tcl
+  # - sed -i 's/set PART xc7k325tiffv676-2L;/set PART $fpga_part;/g' design_1024.tcl
+  # - sed -i 's/set CLOCK_PERIOD 2.75;/set CLOCK_PERIOD $clock_period;/g' design_1024.tcl
+  - vivado -mode tcl -source design_1024.tcl
+
+parameters:
+  fpga_part: 'xc7k325tiffv676-2L'
+  clock_period: 2.75

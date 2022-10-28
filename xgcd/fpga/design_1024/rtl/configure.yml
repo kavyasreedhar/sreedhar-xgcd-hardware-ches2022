@@ -1,0 +1,34 @@
+name: rtl
+
+outputs:
+  - design.v
+
+commands:
+  - wget https://github.com/kavyasreedhar/sreedhar-xgcd-hardware-ches2022/archive/refs/heads/main.zip
+  - unzip main.zip
+  - cd sreedhar-xgcd-hardware-ches2022-main
+
+  # Install requirements
+  - python3 -m venv xgcd_env
+  - source xgcd_env/bin/activate
+  - python -m pip install --upgrade pip
+  - pip install -e .
+
+  - export TOP=$PWD
+  - echo $TOP
+
+  # Generate XGCD wrapper (Core, JTAG, reset synchronizer wiring,
+  # primarily Core and reset synchornizer)
+  - if [[ {constant_time_support} = 1 ]]; then python xgcd/hardware/extended_gcd/xgcd_wrapper_jtag_external.py --bit_length {bit_length} --reduction_factor_even {reduction_factor_even} --reduction_factor_odd {reduction_factor_odd} --constant_time_support --csa_handwritten; else python xgcd/hardware/extended_gcd/xgcd_wrapper_jtag_external.py --bit_length {bit_length} --reduction_factor_even {reduction_factor_even} --reduction_factor_odd {reduction_factor_odd} --csa_handwritten; fi
+
+  - cd ..
+  - git clone https://github.com/StanfordAHA/AhaM3SoC.git
+  - cat $TOP/XGCDWrapper.v AhaM3SoC/hardware/logical/AhaPlatformController/verilog/AhaResetSync.v > design.v
+  - cat design.v > outputs/design.v
+
+parameters:
+  bit_length: 255
+  reduction_factor_even: 2
+  reduction_factor_odd: 4
+  constant_time_support: 1
+  jtag_cfg_bus_width: 521

@@ -1,0 +1,14 @@
+name: fpga_synth_pnr
+
+inputs:
+  - design.v
+
+commands:
+  - cp design_255.tcl original_design_255.tcl
+  # - sed -i 's/set PART xczu7eg-ffvf1517-3-e;/set PART $fpga_part;/g' design_255.tcl
+  # - sed -i 's/set CLOCK_PERIOD 2.22;/set CLOCK_PERIOD $clock_period;/g' design_255.tcl
+  - vivado -mode tcl -source design_255.tcl
+
+parameters:
+  fpga_part: 'xczu7eg-ffvf1517-3-e'
+  clock_period: 2.22
