@@ -610,7 +610,7 @@ make 12
 make 14
 ```
 
-Final GDS location: `$TOP/xgcd/physical_design/sky130/build/15-decapsignoff/design.gds.gz`
+Final GDS location: `$TOP/xgcd/physical_design/sky130/build/14-decapsignoff/design.gds.gz`
 
 ### TSMC 16nm
 
