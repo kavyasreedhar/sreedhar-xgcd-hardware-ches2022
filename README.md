@@ -660,7 +660,7 @@ make 4
 
 ## FPGA Synthesis, Place and Route
 
-We use Vivado 2019.2 and provide scripts with mflowgen (please see Physical Design section above for more information on mflowgen).
+We use Vivado 2019.2 (`module load vivado/2019.2`) and provide scripts with mflowgen (please see Physical Design section above for more information on mflowgen).
 
 To run synthesis, place, and route for Design (1):
 
