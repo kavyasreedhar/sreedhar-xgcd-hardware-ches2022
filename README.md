@@ -670,7 +670,7 @@ mflowgen run --design ../design_1024
 make 2
 ```
 
-This command takes 23 minutes on our machine.
+This command takes 3.5 hours on our machine.
 
 To view timing and utilization reports:
 
@@ -688,7 +688,7 @@ cd $TOP/xgcd/fpga/build_255
 mflowgen run --design ../design_255
 make 2
 ```
-This command takes 2 hours on our machine.
+This command takes 30 minutes on our machine.
 
 To view timing and utilization reports:
 
