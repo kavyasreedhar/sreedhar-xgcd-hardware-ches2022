@@ -32,6 +32,7 @@ Contact: skavya@stanford.edu, ctorng@stanford.edu
 - [Common Issues](#common-issues)
 - [Citation](#citation)
 
+
 ## Example Designs
 
 Design | Bitwidth | Constant-time | Technology Node | Area (mm^2) | Clock Frequency (GHz) | Cycles | Execution Time (ns) |
@@ -54,7 +55,9 @@ System Requirements:
 1) DesignWare Library - Datapath and Building Block IP (https://www.synopsys.com/dw/buildingblock.php), specifically DW01_csa (https://www.synopsys.com/dw/ipdir.php?c=DW01_csa) for the DesignWare carry-save adder module and DW_tap (https://www.synopsys.com/dw/ipdir.php?c=DW_tap) for the DesignWare TAP controller (for our JTAG module)
   * We provide a simple handwritten CSA module that can be used instead of the DW01_csa module. Note that the DesignWare CSA module will result in better performance.
   * The DW_tap module is only needed for physical design for JTAG generation. Thus, the extended GCD functional model, hardware generator, and testbench can be run without this file.
-2) Python 3.7+ (We have tested these commands with Python 3.7.4 and Python 3.9.4 specifically)
+
+2) Python 3.7+ (We have used Python 3.7.4 and Python 3.9.4 with this repo)
+
 3) Verilator (https://verilator.org/guide/latest/install.html) required for running tests.
 
 For MacOS:
@@ -62,6 +65,8 @@ For MacOS:
 brew install verilator
 ```
 4) Genesis r11879 (https://github.com/StanfordVLSI/Genesis2/wiki) required for JTAG in RTL generation for physical design script execution.
+
+5) Vivado 2019.2 required for FPGA experiments.
 
 ### Repo Setup
 1) Clone repository:
@@ -652,6 +657,45 @@ To run synthesis with Synopsys DC (similarly to the RTL step, note that "4" corr
 ```
 make 4
 ```
+
+## FPGA Synthesis, Place and Route
+
+We use Vivado 2019.2 and provide scripts with mflowgen (please see Physical Design section above for more information on mflowgen).
+
+To run synthesis, place, and route for Design (1):
+
+```
+cd $TOP/xgcd/fpga/build_1024
+mflowgen run --design ../design_1024
+make 2
+```
+
+This command takes 23 minutes on our machine.
+
+To view timing and utilization reports:
+
+```
+cd $TOP/xgcd/fpga/build_1024
+cd 2-fpga_synth_pnr/reports/post-route
+```
+* timing-summary.rpt - timing report
+* util-summary.rpt - utilization report
+
+Similarly, to run synthesis, place, and route for Design (2):
+
+```
+cd $TOP/xgcd/fpga/build_255
+mflowgen run --design ../design_255
+make 2
+```
+To view timing and utilization reports:
+
+```
+cd $TOP/xgcd/fpga/build_255
+cd 2-fpga_synth_pnr/reports/post-route
+```
+* timing-summary.rpt - timing report
+* util-summary.rpt - utilization report
 
 ## Common Issues
 

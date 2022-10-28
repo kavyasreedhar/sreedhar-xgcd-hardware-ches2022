@@ -16,7 +16,11 @@ class JtagWrapper(Generator):
 
         self.A = self.output("A", self.bit_length)
         self.B = self.output("B", self.bit_length)
+
+        # set configuration to constant_time true
         self.constant_time = self.output("constant_time", 1)
+        self.wire(self.constant_time, 1)
+        
         self.bezout_a = self.input("bezout_a", self.inter_bit_length)
         self.bezout_b = self.input("bezout_b", self.inter_bit_length)
         self.clk_en = self.output("clk_en", 1)
@@ -38,9 +42,10 @@ class JtagWrapper(Generator):
             self.counter = self.var("counter", clog2(self.bit_length * 2))
             self.index = self.var("index", clog2(self.bit_length))
             self.wire(self.index, self.counter[clog2(self.bit_length) - 1, 0])
-            self.out_counter = self.var("out_counter", clog2(self.bit_length * 2))
-            self.out_index = self.var("out_index", clog2(self.bit_length))
-            self.wire(self.out_index, self.out_counter[clog2(self.bit_length) - 1, 0])
+
+            self.out_counter = self.var("out_counter", clog2(self.inter_bit_length * 2))
+            self.out_index = self.var("out_index", clog2(self.inter_bit_length))
+            self.wire(self.out_index, self.out_counter[clog2(self.inter_bit_length) - 1, 0])
 
             self.wire(self.start, self.counter == self.bit_length * 2 - 1)
             self.wire(self.clk_en, 1)
@@ -76,5 +81,5 @@ class JtagWrapper(Generator):
 
 
 if __name__ == "__main__":
-    jtag_wrapper = JtagWrapper()
+    jtag_wrapper = JtagWrapper(255, False)
     verilog(jtag_wrapper, filename="JtagWrapper.v")
