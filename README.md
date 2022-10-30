@@ -732,6 +732,17 @@ Solution:
 
 * Install Verilator (see "Required System Setup" section above).
 
+Error:
+```
+mflowgen: command not found
+```
+
+Solution: 
+```
+cd $TOP
+source xgcd_env/bin/activate
+```
+
 Other notes:
 * Unless otherwise specified, all commands should be run from `$TOP`.
 * If using our handwritten stub (not the DesignWare CSA module), please make sure that `DW_PATH` is not set (`unset DW_PATH`)
