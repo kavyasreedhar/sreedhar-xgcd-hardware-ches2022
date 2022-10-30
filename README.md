@@ -29,6 +29,7 @@ Contact: skavya@stanford.edu
 - [Physical Design](#physical-design)
     - [SKY 130nm](#sky-130nm)
     - [TSMC 16nm](#tsmc-16nm)
+- [FPGA Synthesis, Place and Route](#fpga-synthesis-place-and-route)
 - [Common Issues](#common-issues)
 - [Citation](#citation)
 
@@ -660,7 +661,7 @@ make 4
 
 ## FPGA Synthesis, Place and Route
 
-We use Vivado 2019.2 (`module load vivado/2019.2`) and provide scripts with mflowgen (please see Physical Design section above for more information on mflowgen).
+We use Vivado v2019.2 (`module load vivado/2019.2`) and provide scripts with mflowgen (please see Physical Design section above for more information on mflowgen).
 
 To run synthesis, place, and route for Design (1):
 
