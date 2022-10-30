@@ -673,15 +673,6 @@ make 2
 
 This command takes 3.5 hours on our machine.
 
-To view timing and utilization reports:
-
-```
-cd $TOP/xgcd/fpga/build_1024
-cd 2-fpga_synth_pnr/reports/post-route
-```
-* timing-summary.rpt - timing report
-* util-summary.rpt - utilization report
-
 Similarly, to run synthesis, place, and route for Design (2):
 
 ```
@@ -691,14 +682,37 @@ make 2
 ```
 This command takes 30 minutes on our machine.
 
+The commands below are for Design (1), corresponding to `$TOP/xgcd/fpga/design_1024` and `$TOP/xgcd/fpga/build_1024`. The same commands can be used for Design (2), by replacing those paths with `$TOP/xgcd/fpga/design_255` and `$TOP/xgcd/fpga/build_255` respectively instead.
+
 To view timing and utilization reports:
 
 ```
-cd $TOP/xgcd/fpga/build_255
+cd $TOP/xgcd/fpga/build_1024
 cd 2-fpga_synth_pnr/reports/post-route
 ```
 * timing-summary.rpt - timing report
 * util-summary.rpt - utilization report
+
+To change the clock period or FPGA part used for synthesis, place, and route, please edit the corresponding parameters (clock_period and fpga_part) in `$TOP/xgcd/fpga/design_1024/construct.py` and then run
+
+```
+cd $TOP/xgcd/fpga/build_1024
+mflowgen run --update
+```
+
+To verify that the clock period and/or FPGA part parameters have been updated, you can use
+```
+make info-2
+```
+and see that the parameter values have been changed for this mflowgen step.
+
+Finally, you can re-run this mflowgen step with the updated parameters.
+```
+make clean-2
+make 2
+```
+
+The timing and utilization reports will be updated in the same paths as listed above.
 
 ## Common Issues
 
