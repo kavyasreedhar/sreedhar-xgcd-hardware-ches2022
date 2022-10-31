@@ -708,7 +708,7 @@ and see that the parameter values have been changed for this mflowgen step.
 
 Finally, you can re-run this mflowgen step with the updated parameters.
 ```
-make clean-2
+make clean-all
 make 2
 ```
 

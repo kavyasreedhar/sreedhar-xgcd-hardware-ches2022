@@ -27,7 +27,7 @@ def construct():
     'reduction_factor_odd'  : 4,
     'constant_time_support' : 0,
     'clock_period'          : 2.75,
-    'fpga_part'             : 'xc7k325tiffv676-2L',
+    'fpga_part'             : 'xc7k410tfbg676-1',
     'topographical'         : True,
     'hold_target_slack'     : 0.005,
     'setup_target_slack'    : 0.120,
