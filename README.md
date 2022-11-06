@@ -765,9 +765,16 @@ Other notes:
 ## Citation
 ```
 @article{sreedhar2022fast,
-  title={A Fast Large-Integer Extended GCD Algorithm and Hardware Design for Verifiable Delay Functions and Modular Inversion},
-  author={Sreedhar, Kavya and Horowitz, Mark and Torng, Christopher},
-  journal={IACR Transactions on Cryptographic Hardware and Embedded Systems (TCHES)},
-  year={2022}
+  author       = {Sreedhar, Kavya and Horowitz, Mark and Torng, Christopher},
+  title        = {A Fast Large-Integer Extended GCD Algorithm and Hardware Design for Verifiable Delay Functions and Modular Inversion},
+  journal      = {IACR Transactions on Cryptographic Hardware and Embedded Systems (TCHES)},
+  year         = 2022,
+  volume       = 2022,
+  number       = 4,
+  pages        = {163–187},
+  month        = {Aug.},
+  url          = {https://tches.iacr.org/index.php/TCHES/article/view/9817},
+  DOI          = {10.46586/tches.v2022.i4.163-187},
+  note         = {Artifact available at \url{https://artifacts.iacr.org/tches/2022/a24}},
 }
 ```
